@@ -22,24 +22,24 @@ def test_should_report_capacity():
     assert len(HashTable(size=100)) == 100
 
 def test_should_create_empty_value_slots():
-    assert HashTable(size=3).values == [BLANK,BLANK,BLANK]
+    assert HashTable(size=3).pairs == [BLANK,BLANK,BLANK]
 
-def test_should_store_key_and_values():
+def test_should_store_key_and_pairs():
     myhashtable = HashTable(size=100)
     myhashtable['BDFL']="hello"
     myhashtable[43]=43
     myhashtable[False]=True
 
-    assert "hello" in myhashtable.values
-    assert 43 in myhashtable.values
-    assert True in myhashtable.values
+    assert "hello" in myhashtable.pairs
+    assert 43 in myhashtable.pairs
+    assert True in myhashtable.pairs
 
 def test_should_not_increase_when_adding_elements(hash_table):
     assert len(hash_table) == 100
 
 
 def test_should_not_contain_none_value_when_created():
-    assert None not in HashTable(size=100).values
+    assert None not in HashTable(size=100).pairs
 
 def test_should_find_value_by_key(hash_table):
     assert hash_table["hello"] == 'hola'
@@ -72,12 +72,12 @@ def test_should_get_value_with_default(hash_table):
 
 def test_should_delete_key_value_pair(hash_table):
     assert "hello" in hash_table
-    assert "hola" in hash_table.values
+    assert "hola" in hash_table.pairs
     assert len(hash_table) == 100
     
     del hash_table["hello"]
     assert "hello" not in hash_table
-    assert "hola" not in hash_table.values
+    assert "hola" not in hash_table.pairs
     assert len(hash_table) == 100
 
 # This decorator allows us to skip a test 

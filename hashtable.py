@@ -1,19 +1,19 @@
 BLANK = object()
 class HashTable:
     def __init__(self,size) -> None:
-        self.values = size * [BLANK]
+        self.pairs = size * [BLANK]
 
     def __len__(self):
-        return len(self.values)
+        return len(self.pairs)
     
     def _index(self,key):
         return hash(key)%len(self)
     
     def __setitem__(self,key,value):
-        self.values[self._index(key)]=value
+        self.pairs[self._index(key)]=value
 
     def __getitem__(self,key):
-        value = self.values[self._index(key)]
+        value = self.pairs[self._index(key)]
         if  value is BLANK:
             raise KeyError(key)
         return value
