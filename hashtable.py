@@ -7,10 +7,12 @@ BLANK = object()
 
 class HashTable:
     def __init__(self,size) -> None:
+        if size <= 0:
+            raise ValueError("Size must be a positive number")
         self._pairs = size * [None]
 
     def __len__(self):
-        return len(self._pairs)
+        return len(self.pairs)
     
 
     def __setitem__(self,key,value):
@@ -42,10 +44,22 @@ class HashTable:
         else:
             raise KeyError(key)
     
+    # A  higher-level function should be listed before 
+    # the low-level functions that are called.
     def _index(self,key):
-        return hash(key)%len(self)
+        return hash(key)%self.capacity
+    
     @property
     def pairs(self):
-        return [pair for pair in self._pairs if pair]
-# A  higher-level function should be listed before 
-# the low-level functions that are called.
+        return {pair for pair in self._pairs if pair}
+    
+    @property
+    def values(self):
+        return [pair.value for pair in self.pairs]
+    
+    @property
+    def keys(self):
+        return {pair.key for pair in self.pairs}
+    @property
+    def capacity(self):
+        return len(self._pairs)
