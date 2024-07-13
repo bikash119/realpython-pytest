@@ -1,4 +1,10 @@
+from typing import NamedTuple,Any
+
+class Pair(NamedTuple):
+    key: Any
+    value: Any
 BLANK = object()
+
 class HashTable:
     def __init__(self,size) -> None:
         self.pairs = size * [None]
@@ -10,13 +16,13 @@ class HashTable:
         return hash(key)%len(self)
     
     def __setitem__(self,key,value):
-        self.pairs[self._index(key)]=(key,value)
+        self.pairs[self._index(key)]=Pair(key,value)
 
     def __getitem__(self,key):
         pair = self.pairs[self._index(key)]
         if pair is None:
             raise KeyError(key)
-        return pair[1]
+        return pair.value
     
     def __contains__(self,key):
         try:
