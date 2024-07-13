@@ -22,7 +22,8 @@ def test_should_report_capacity():
     assert len(HashTable(size=100)) == 100
 
 def test_should_create_empty_value_slots():
-    assert HashTable(size=3).pairs == [None,None,None]
+    ## Testing internal implementation : Whitebox Testing
+    assert HashTable(size=3)._pairs == [None,None,None]
 
 def test_should_store_key_and_pairs():
     myhashtable = HashTable(size=100)
@@ -33,6 +34,9 @@ def test_should_store_key_and_pairs():
     assert ('BDFL',"hello") in myhashtable.pairs
     assert (43,43) in myhashtable.pairs
     assert (False,True) in myhashtable.pairs
+def test_should_insert_none_value(hash_table):
+    hash_table["key"] = None
+    assert("key",None) in hash_table.pairs
 
 def test_should_not_increase_when_adding_elements(hash_table):
     assert len(hash_table) == 100
@@ -109,3 +113,9 @@ def test_should_return_pairs(hash_table):
     assert ("hello","hola") in hash_table.pairs
     assert (98.6,37) in hash_table.pairs
     assert (False,True) in hash_table.pairs
+
+def test_should_return_copy_of_pairs(hash_table):
+    assert hash_table.pairs is not hash_table.pairs
+
+def test_should_not_include_blank_pairs(hash_table):
+    assert None not in hash_table.pairs
