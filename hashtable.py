@@ -8,8 +8,8 @@ BLANK = object()
 class HashTable:
 
     @classmethod
-    def from_dict(cls,dictionary):
-        hash_table = cls(len(dictionary)* 10)
+    def from_dict(cls,dictionary,capacity=None):
+        hash_table = cls(capacity or len(dictionary)* 10)
         for key, value in dictionary.items():
             hash_table[key] =  value
         return hash_table
@@ -45,6 +45,9 @@ class HashTable:
             return self[key]
         except KeyError:
             return default
+    
+    def copy(self):
+        return HashTable.from_dict(dict(self.pairs),capacity=self.capacity)
         
     def __delitem__(self,key):
         if key in self:
@@ -71,6 +74,14 @@ class HashTable:
         # return "HashTable.from_dict({"+ ", ".join(pairs) + "})"
         cls = self.__class__.__name__
         return f"{cls}.from_dict({str(self)})"
+    
+    def __eq__(self, other: object) -> bool:
+        if self is other:
+            return True
+        if type(self) is not type(other):
+            return False
+        return self.pairs == other.pairs
+
     
     # A  higher-level function should be listed before 
     # the low-level functions that are called.
