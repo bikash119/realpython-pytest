@@ -206,3 +206,13 @@ def test_should_create_hashtable_from_dict():
     assert hash_table.keys == set(dictionary.keys())
     assert hash_table.pairs == set(dictionary.items())
     assert unordered(hash_table.values) == list(dictionary.values())
+
+def test_should_use_dict_literal_for_str(hash_table):
+    assert repr(hash_table) in {
+         "HashTable.from_dict({'hello': 'hola',98.6: 37, False: True})"
+        ,"HashTable.from_dict({'hello': 'hola',False: True, 98.6: 37})"
+        ,"HashTable.from_dict({98.6: 37, 'hello': 'hola', False: True})"
+        ,"HashTable.from_dict({98.6: 37, False: True, 'hello': 'hola'})"
+        ,"HashTable.from_dict({False: True, 'hello': 'hola', 98.6: 37})"
+        ,"HashTable.from_dict({False: True, 98.6: 37, 'hello': 'hola'})"
+    }

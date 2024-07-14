@@ -63,6 +63,15 @@ class HashTable:
             pairs.append(f"{key!r}: {value!r}")
         return "{"+ ", ".join(pairs) + "}"
     
+    def __repr__(self) -> str:
+        ## Bad Impl
+        # pairs = []
+        # for key,value in self.pairs:
+        #     pairs.append(f"{key!r}: {value!r}")
+        # return "HashTable.from_dict({"+ ", ".join(pairs) + "})"
+        cls = self.__class__.__name__
+        return f"{cls}.from_dict({str(self)})"
+    
     # A  higher-level function should be listed before 
     # the low-level functions that are called.
     def _index(self,key):
