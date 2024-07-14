@@ -175,4 +175,34 @@ def test_should_report_capacity_of_empty_hash_table():
 def test_should_report_capacity(hash_table):
     assert hash_table.capacity == 100
 
+def test_should_iterate_over_keys(hash_table):
+    for key in hash_table.keys:
+        assert key in ("hello",98.6,False)
 
+def test_should_iterate_over_values(hash_table):
+    for value in hash_table.values:
+        assert value in ("hola",37,True)
+
+def test_should_iterate_over_pairs(hash_table):
+    for key, value in hash_table.pairs:
+        assert key in hash_table.keys
+        assert value in hash_table.values
+
+def test_should_use_dict_literal_for_str(hash_table):
+    assert str(hash_table) in {
+         "{'hello': 'hola',98.6: 37, False: True}"
+        ,"{'hello': 'hola',False: True, 98.6: 37}"
+        ,"{98.6: 37, 'hello': 'hola', False: True}"
+        ,"{98.6: 37, False: True, 'hello': 'hola'}"
+        ,"{False: True, 'hello': 'hola', 98.6: 37}"
+        ,"{False: True, 98.6: 37, 'hello': 'hola'}"
+    }
+
+def test_should_create_hashtable_from_dict():
+    dictionary = {"hello":"hola",98.6: 37,False: True}
+    hash_table = HashTable.from_dict(dictionary)
+
+    assert hash_table.capacity == len(dictionary) * 10
+    assert hash_table.keys == set(dictionary.keys())
+    assert hash_table.pairs == set(dictionary.items())
+    assert unordered(hash_table.values) == list(dictionary.values())

@@ -6,6 +6,14 @@ class Pair(NamedTuple):
 BLANK = object()
 
 class HashTable:
+
+    @classmethod
+    def from_dict(cls,dictionary):
+        hash_table = cls(len(dictionary)* 10)
+        for key, value in dictionary.items():
+            hash_table[key] =  value
+        return hash_table
+    
     def __init__(self,size) -> None:
         if size <= 0:
             raise ValueError("Size must be a positive number")
@@ -44,6 +52,17 @@ class HashTable:
         else:
             raise KeyError(key)
     
+    # !r conversion flag in the template string, which enforces calling 
+    # repr() instead of the default str() on keys and values.
+    #####
+    ## str() returns a human-friendly text, 
+    ## repr() returns a valid piece of python code.
+    def __str__(self) -> str:
+        pairs = []
+        for key,value in self.pairs:
+            pairs.append(f"{key!r}: {value!r}")
+        return "{"+ ", ".join(pairs) + "}"
+    
     # A  higher-level function should be listed before 
     # the low-level functions that are called.
     def _index(self,key):
@@ -60,6 +79,7 @@ class HashTable:
     @property
     def keys(self):
         return {pair.key for pair in self.pairs}
+    
     @property
     def capacity(self):
         return len(self._pairs)
