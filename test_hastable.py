@@ -176,4 +176,3 @@ def test_should_report_capacity(hash_table):
     assert hash_table.capacity == 100
 
 
-
